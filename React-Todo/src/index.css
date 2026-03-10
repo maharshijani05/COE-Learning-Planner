@@ -1,1 +1,265 @@
 @import "tailwindcss";
+
+/* ─── Theme variables ─────────────────────────────────────── */
+:root {
+  --bg:         #0b0b18;
+  --surface:    rgba(255,255,255,0.045);
+  --surface-h:  rgba(255,255,255,0.08);
+  --surface-in: rgba(255,255,255,0.06);
+  --border:     rgba(255,255,255,0.1);
+  --border-h:   rgba(255,255,255,0.2);
+  --text:       #e2e8f0;
+  --text-sub:   #94a3b8;
+  --text-muted: #4b5670;
+  --accent:     #6366f1;
+  --accent-h:   #818cf8;
+  --accent-glow:rgba(99,102,241,0.25);
+  --shadow:     0 4px 24px rgba(0,0,0,0.45);
+}
+
+:root.light {
+  --bg:         #eef2ff;
+  --surface:    rgba(255,255,255,0.85);
+  --surface-h:  rgba(255,255,255,1);
+  --surface-in: rgba(99,102,241,0.06);
+  --border:     rgba(99,102,241,0.14);
+  --border-h:   rgba(99,102,241,0.3);
+  --text:       #1e1b4b;
+  --text-sub:   #4338ca;
+  --text-muted: #818cf8;
+  --shadow:     0 4px 24px rgba(99,102,241,0.12);
+}
+
+/* ─── Base ────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  min-height: 100vh;
+  transition: background 0.4s, color 0.3s;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ─── Scrollbar ───────────────────────────────────────────── */
+* { scrollbar-width: thin; scrollbar-color: var(--accent) transparent; }
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-thumb { background: var(--accent); border-radius: 3px; }
+
+/* ─── Animations ──────────────────────────────────────────── */
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(-10px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)     scale(1);    }
+}
+@keyframes bounceCheck {
+  0%   { transform: scale(0) rotate(-10deg); }
+  55%  { transform: scale(1.25) rotate(6deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+@keyframes starPop {
+  0%   { transform: scale(1) rotate(0); }
+  30%  { transform: scale(1.7) rotate(22deg); }
+  70%  { transform: scale(0.9) rotate(-5deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+@keyframes shake {
+  0%,100% { transform: translateX(0); }
+  25%     { transform: translateX(-8px); }
+  75%     { transform: translateX(8px); }
+}
+@keyframes pulseOverdue {
+  0%,100% { box-shadow: 0 0 0 0 rgba(239,68,68,0.35); }
+  50%     { box-shadow: 0 0 0 7px rgba(239,68,68,0); }
+}
+@keyframes gradientShift {
+  0%,100% { background-position: 0% 50%; }
+  50%     { background-position: 100% 50%; }
+}
+@keyframes confettiFall {
+  0%   { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+  100% { transform: translateY(105vh) rotate(720deg) scale(0.4); opacity: 0; }
+}
+@keyframes float {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-8px); }
+}
+
+.animate-in    { animation: fadeSlideIn 0.32s cubic-bezier(0.16,1,0.3,1) forwards; }
+.animate-shake { animation: shake 0.4s ease; }
+.animate-float { animation: float 3.5s ease-in-out infinite; }
+.star-popping  { animation: starPop 0.4s ease forwards; }
+.overdue-pulse { animation: pulseOverdue 2.2s ease-in-out infinite; }
+.confetti-bit  { animation: confettiFall var(--dur,1.4s) var(--delay,0s) ease forwards; }
+
+/* ─── App background ──────────────────────────────────────── */
+.app-bg {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 15% 10%, rgba(99,102,241,0.18) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 85%, rgba(139,92,246,0.14) 0%, transparent 50%),
+    var(--bg);
+  transition: background 0.4s;
+}
+
+/* ─── Glass surface ───────────────────────────────────────── */
+.glass {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--shadow);
+  transition: background 0.2s, box-shadow 0.2s, border-color 0.2s;
+}
+.glass:hover { background: var(--surface-h); }
+
+/* ─── Animated gradient header ────────────────────────────── */
+.gradient-bar {
+  background: linear-gradient(135deg, #6366f1, #8b5cf6, #ec4899, #6366f1);
+  background-size: 300% 300%;
+  animation: gradientShift 6s ease infinite;
+}
+
+/* ─── Inputs ──────────────────────────────────────────────── */
+.u-input {
+  background: var(--surface-in);
+  border: 1px solid var(--border);
+  color: var(--text);
+  border-radius: 10px;
+  padding: 9px 13px;
+  width: 100%;
+  outline: none;
+  font-size: 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+.u-input:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-glow);
+}
+.u-input::placeholder { color: var(--text-muted); }
+select.u-input { cursor: pointer; }
+select.u-input option { background: #1a1a2e; color: #e2e8f0; }
+
+/* ─── Buttons ─────────────────────────────────────────────── */
+.btn-primary {
+  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 9px 22px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  box-shadow: 0 4px 15px rgba(99,102,241,0.35);
+  transition: transform 0.15s, box-shadow 0.15s;
+  font-family: inherit;
+}
+.btn-primary:hover  { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(99,102,241,0.5); }
+.btn-primary:active { transform: translateY(0); }
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-sub);
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: background 0.18s, border-color 0.18s, color 0.18s;
+  font-family: inherit;
+}
+.btn-ghost:hover         { background: var(--surface-h); border-color: var(--border-h); color: var(--text); }
+.btn-ghost.danger:hover  { border-color: rgba(239,68,68,0.4); color: #f87171; background: rgba(239,68,68,0.06); }
+
+.btn-icon {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  line-height: 1;
+  transition: background 0.15s, transform 0.12s;
+  color: var(--text-muted);
+}
+.btn-icon:hover  { background: var(--surface-h); color: var(--text); }
+.btn-icon:active { transform: scale(0.88); }
+
+/* ─── Custom circle checkbox ──────────────────────────────── */
+.check-circle {
+  width: 22px;
+  height: 22px;
+  border: 2px solid var(--border-h);
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: border-color 0.2s, background 0.2s;
+  user-select: none;
+}
+.check-circle:hover          { border-color: var(--accent); background: var(--accent-glow); }
+.check-circle.checked        { background: var(--accent); border-color: var(--accent); animation: bounceCheck 0.35s ease; }
+.check-circle.checked::after { content: '✓'; color: white; font-size: 12px; font-weight: 700; }
+
+/* ─── Filter tabs ─────────────────────────────────────────── */
+.ftab {
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-sub);
+  white-space: nowrap;
+  transition: all 0.18s;
+  font-family: inherit;
+}
+.ftab:hover  { border-color: var(--border-h); color: var(--text); }
+.ftab.active { background: var(--accent); border-color: var(--accent); color: white; box-shadow: 0 2px 10px var(--accent-glow); }
+
+/* ─── Priority left borders ───────────────────────────────── */
+.pri-low      { border-left: 3px solid #22c55e; }
+.pri-medium   { border-left: 3px solid #f59e0b; }
+.pri-high     { border-left: 3px solid #f97316; }
+.pri-critical { border-left: 3px solid #ef4444; }
+
+/* ─── Progress bar ────────────────────────────────────────── */
+.prog-track { height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+.prog-fill  { height: 100%; background: linear-gradient(90deg, #6366f1, #8b5cf6); border-radius: 2px; transition: width 0.5s ease; }
+
+/* ─── Stats SVG ring ──────────────────────────────────────── */
+.stats-ring { transform: rotate(-90deg); transform-origin: center; }
+.stats-arc  { transition: stroke-dashoffset 0.9s cubic-bezier(0.4,0,0.2,1); }
+
+/* ─── Keyboard badge ──────────────────────────────────────── */
+kbd {
+  display: inline-block;
+  padding: 1px 5px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 10px;
+  font-family: monospace;
+  color: var(--text-sub);
+}
+
+/* ─── Notes style ─────────────────────────────────────────── */
+.note-box {
+  font-size: 13px;
+  color: var(--text-sub);
+  padding: 7px 10px;
+  background: var(--surface-in);
+  border-radius: 8px;
+  border-left: 2px solid var(--accent);
+  line-height: 1.55;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
