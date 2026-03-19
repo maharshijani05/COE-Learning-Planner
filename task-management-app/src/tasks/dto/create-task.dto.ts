@@ -1,5 +1,5 @@
 import { IsString, IsNotEmpty, IsOptional, IsEnum, MaxLength, MinLength } from 'class-validator';
-import { TaskStatus } from '../enums/task-status.enum';
+import { TaskStatus } from '@prisma/client';
 
 export class CreateTaskDto {
   @IsString()
