@@ -6,6 +6,7 @@ import {
   Delete,
   Body,
   Param,
+  Query,
   ParseIntPipe,
   HttpCode,
   HttpStatus,
@@ -13,6 +14,7 @@ import {
 import { Task } from '@prisma/client';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
+import { PaginatedResult, PaginationDto } from './dto/pagination.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 
 @Controller('tasks')
@@ -20,8 +22,8 @@ export class TasksController {
   constructor(private readonly tasksService: TasksService) {}
 
   @Get()
-  findAll(): Promise<Task[]> {
-    return this.tasksService.findAll();
+  findAll(@Query() pagination: PaginationDto): Promise<PaginatedResult<Task>> {
+    return this.tasksService.findAll(pagination);
   }
 
   @Get(':id')
