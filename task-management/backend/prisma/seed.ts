@@ -31,10 +31,16 @@ async function main() {
       { title: 'Update API documentation', description: 'Keep Swagger docs in sync with latest endpoint changes', status: 'OPEN', userId: bob.id },
       { title: 'Optimize slow queries', description: 'Profile and add indexes for the most expensive DB queries', status: 'OPEN', userId: bob.id },
       { title: 'Deploy to staging', description: 'Push latest release to the staging environment for QA', status: 'IN_PROGRESS', userId: bob.id },
+      { title: 'Set up monitoring', description: 'Integrate Datadog for error tracking and performance monitoring', status: 'OPEN', userId: alice.id },
+      { title: 'Refactor auth module', description: 'Split monolithic auth service into smaller focused modules', status: 'OPEN', userId: alice.id },
+      { title: 'Write E2E tests', description: 'Cover critical user flows with Playwright end-to-end tests', status: 'OPEN', userId: bob.id },
+      { title: 'Migrate to PostgreSQL', description: 'Move from SQLite to PostgreSQL for production readiness', status: 'DONE', userId: bob.id },
+      { title: 'Add rate limiting', description: 'Protect API endpoints from abuse with request throttling', status: 'OPEN', userId: alice.id },
+      { title: 'Code review session', description: 'Schedule and run weekly architecture review with the team', status: 'IN_PROGRESS', userId: bob.id },
     ],
   });
 
-  console.log('Seeded: 2 users, 10 tasks');
+  console.log('Seeded: 2 users, 16 tasks');
 }
 
 main()
